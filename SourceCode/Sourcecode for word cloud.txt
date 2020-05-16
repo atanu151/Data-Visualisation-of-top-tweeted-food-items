@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
+import warnings 
+warnings.filterwarnings('ignore')
+
+import sys
+print(sys.executable)
+
+c1 = pd.read_csv('D:/Data Visualization/Viz.csv')
+
+def plot_wordcloud(text, mask=None, max_words=400, max_font_size=50, figure_size=(24.0,16.0), 
+                   title = None, title_size=40, image_color=False):
+    stopwords = set(STOPWORDS)
+    more_stopwords = {'one', 'br', 'Po', 'th', 'sayi', 'fo', 'Unknown','Name','Length','Word','object','dtype'}
+    stopwords = stopwords.union(more_stopwords)
+
+    wordcloud = WordCloud(background_color='white',
+                    stopwords = stopwords,
+                    max_words = max_words,
+                    max_font_size = max_font_size, 
+                    random_state = 42,
+                    mask = mask)
+    wordcloud.generate(text)
+    plt.figure(figsize=figure_size)
+    if image_color:
+        image_colors = ImageColorGenerator(mask);
+        plt.imshow(wordcloud.recolor(color_func=image_colors), interpolation="bilinear");
+        plt.title(title, fontdict={'size': title_size,  
+                                  'verticalalignment': 'bottom'})
+    else:
+        plt.imshow(wordcloud);
+        plt.title(title, fontdict={'size': title_size, 'color': 'green', 
+                                  'verticalalignment': 'bottom'})
+    plt.axis('off');
+    plt.tight_layout()  
+    
+d = 'D:/Data Visualization/'
+
+n = round(c1.shape[0]*0.01)
+top_recommended_comments_text = str(c1.nlargest(100000, columns='Count', keep='all').Word)
+upvote_mask = np.array(Image.open(d + 'body.jpg'))
+plot_wordcloud(top_recommended_comments_text, upvote_mask, max_words=300, max_font_size=100,
+               title = 'Most Tweeted Words')
