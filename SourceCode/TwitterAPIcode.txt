@@ -1,0 +1,105 @@
+### Libraries and packages installed
+
+install.packages("httr")
+install.packages("rtweet")
+install.packages("twitteR")
+install.packages("SnowballC")
+install.packages("tm")
+install.packages("syuzhet")
+
+library("httr")
+library("rtweet")
+library(SnowballC)
+library(tm)
+library(syuzhet)
+library(twitteR)
+
+if (!requireNamespace("devtools", quietly = TRUE)) {
+install.packages("devtools")
+}
+devtools::install_github("mkearney/rtweet")
+library(rtweet)
+
+### Connecting with Twitter API
+
+appname <- "Saumitra_app"
+
+### Personal keys are hidden
+
+api_key <- '*************************'
+api_secret <- '**************************************************'
+access_token <- '**************************************************'
+access_token_secret <- '*********************************************'
+
+setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
+
+#1
+tweets <- get_timeline("Mark_Sisson", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/Marksisson')
+
+#2
+tweets <- get_timeline("NutritionDiva", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/NutritionDiva')
+
+#3
+tweets <- get_timeline("JamieOliver", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/JamieOliver')
+
+#4
+tweets <- get_timeline("ChrisKresser", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/ChrisKresser')
+
+#5
+tweets <- get_timeline("JoyBauer", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/JoyBauer')
+
+#6
+tweets <- get_timeline("JohnLaPuma", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/JohnLaPuma')
+
+#7
+tweets <- get_timeline("TeamNutrition", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/TeamNutrition')
+
+#8
+tweets <- get_timeline("thefoodbabe", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/thefoodbabe')
+
+#9
+tweets <- get_timeline("robbwolf", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/robbwolf')
+
+#10
+tweets <- get_timeline("DrFrankLipman", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/DrFrankLipman')
+
+#11
+tweets <- get_timeline("kerigans", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/kerigans')
+
+#12
+tweets <- get_timeline("DietitianOnline", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/DietitianOnline')
+
+#13
+tweets <- get_timeline("HealthCastleGlo", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/HealthCastleGlo')
+
+#14
+tweets <- get_timeline("DrOz", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/DrOz')
+
+#15
+tweets <- get_timeline("JanetHelm", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/JanetHelm')
+
+#16
+tweets <- get_timeline("LaurenPincusRD", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/LaurenPincusRD')
+
+#17
+tweets <- get_timeline("KathySiegelRDN", n = 3200)
+save_as_csv(tweets,'C:/Users/Atanu/Downloads/KathySiegelRDN')
+
+savehistory("C:/Users/Atanu/Downloads/twitter.Rhistory")
+savehistory("~/twitter.Rhistory")
