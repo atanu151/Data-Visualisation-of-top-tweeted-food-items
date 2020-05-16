@@ -1,3 +1,6 @@
 # Data-Visualisation-of-top-tweeted-food-items
 Twitter has become the source of information in the age of the internet. Many influencers share their expertise for their respective domains on Twitter, and people can achieve potential benefits by simply following them. Having proper nutritious food is one of the primary fitness goals of human in this century, and the best way to get some essential tips on health is to follow the top Nutrition Experts on Twitter. 
+
 The purpose of this project is to find the most commonly tweeted food items by top Nutrition Experts on Twitter assuming the food item shared by all the Nutrition Experts in their tweets multiple times should have a vital nutrition factor. The food items’ tweet frequency is then measured in percentage to show the relative difference of food items tweeted among the Nutrition Experts. The number of tweets counts and the overall percentage of tweets for particular food items are to be measured to compare the items individually. The aim is also to find the most tweeted words related to food, health and nutrition other than the top tweeted food items to understand what nutritionist experts are talking about on twitter.
+
+Youtube : https://youtu.be/ULs43QsDbDk
