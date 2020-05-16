@@ -1,0 +1,118 @@
+****** Data Integration, exploration, cleaning and processing ******
+
+#Loaded the data in Hadoop Cluster
+#Loading data in Pig
+
+hadoop fs -mkdir /twitterdata
+hadoop fs -put /home/saumit_91/Marksisson.csv /twitterdata
+hadoop fs -put /home/saumit_91/NutritionDiva.csv /twitterdata
+hadoop fs -put /home/saumit_91/JamieOliver.csv /twitterdata
+hadoop fs -put /home/saumit_91/ChrisKresser.csv /twitterdata
+hadoop fs -put /home/saumit_91/JoyBauer.csv /twitterdata
+hadoop fs -put /home/saumit_91/JohnLaPuma.csv /twitterdata
+hadoop fs -put /home/saumit_91/TeamNutrition.csv /twitterdata
+hadoop fs -put /home/saumit_91/thefoodbabe.csv /twitterdata
+hadoop fs -put /home/saumit_91/robbwolf.csv /twitterdata
+hadoop fs -put /home/saumit_91/DrFrankLipman.csv /twitterdata
+hadoop fs -put /home/saumit_91/kerigans.csv /twitterdata
+hadoop fs -put /home/saumit_91/DietitianOnline.csv /twitterdata
+hadoop fs -put /home/saumit_91/HealthCastleGlo.csv /twitterdata
+hadoop fs -put /home/saumit_91/DrOz.csv /twitterdata
+hadoop fs -put /home/saumit_91/JanetHelm.csv /twitterdata
+hadoop fs -put /home/saumit_91/LaurenPincusRD.csv /twitterdata
+hadoop fs -put /home/saumit_91/KathySiegelRDN.csv /twitterdata
+
+#extract
+F1 = LOAD '/twitterdata/Marksission.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F2 = LOAD '/twitterdata/NutritionDiva.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F3 = LOAD '/twitterdata/JamieOliver.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F4 = LOAD '/twitterdata/ChrisKresser.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F5 = LOAD '/twitterdata/JoyBauer.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F6 = LOAD '/twitterdata/JohnLaPuma.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F7 = LOAD '/twitterdata/TeamNutrition.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F8 = LOAD '/twitterdata/thefoodbabe.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F9 = LOAD '/twitterdata/robbwolf.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F10 = LOAD '/twitterdata/DrFrankLipman.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F11 = LOAD '/twitterdata/kerigans.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F12 = LOAD '/twitterdata/DietitianOnline.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F13 = LOAD '/twitterdata/HealthCastleGlo.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F14 = LOAD '/twitterdata/DrOz.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F15 = LOAD '/twitterdata/JanetHelm.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F16 = LOAD '/twitterdata/LaurenPincusRD.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+F17 = LOAD '/twitterdata/KathySiegelRDN.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE','NOCHANGE','SKIP_INPUT_HEADER') AS (Screenname:chararray, tweet:chararray);
+
+Main = Union F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17 ;
+
+#remove comma
+Main1 = FOREACH Main GENERATE Screename AS Screename, REPLACE(tweet,',*','') AS tweet;
+
+#remove \n
+Main2 = FOREACH Main1 GENERATE Screename AS Screename, REPLACE(tweet,'\n*','') AS tweet;
+
+#remove <.*?>
+Main3 = FOREACH Main2 GENERATE Screename AS Screename, REPLACE(tweet,'<.*?>','') AS tweet;
+
+#remove <https>
+Main4 = FOREACH Main3 GENERATE Screename AS Screename, REPLACE(tweet,'https**','') AS tweet;
+
+#remove hypen (-)
+Main5 = FOREACH Main4 GENERATE Screename AS Screename, REPLACE(tweet,'-*','') AS tweet;
+
+#converting the tweet in lower case
+Main6 = FOREACH Main5 GENERATE Screename AS Screename, lower(tweet) AS tweet;
+
+#after cleaning the data is stored
+STORE Main6 INTO '/twitterdata/final.csv' USING PigStorage(',');
+
+# Using HIVE, all the tweets are concatenated in a single row per Twitter User for Processing 
+
+CREATE TABLE test(Name string,text varchar(500)) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+describe formatted test;
+
+load data inpath '/twitterdata/final.csv' overwrite into table test;
+
+select * from test limit 10;
+
+select distinct(name) from test;
+
+# Query for segregating all the tweets in a single row for every Twitter User
+INSERT OVERWRITE LOCAL DIRECTORY '/home/saumit_91/resone' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select Name, concat_ws(".",collect_list(text)) text fr
+om test group by Name ;
+
+#after merging the files, removing comma as mapreduce program is coded that way and storing in pig directory
+sed 's/,/ /g' 000000_0 > resone
+
+hadoop fs -put resone /twitterdata
+
+#Downloaded streaming jar file and ran the script for mapreduce phase one for getting the word count
+
+hadoop jar /home/saumit_91/hadoop-streaming-2.7.1.jar -file /home/saumit_91/MapperPhaseOne.py /home/saumit_91/ReducerPhaseOne.py -mapper "python MapperPhaseOne.py" -reducer "python ReducerPhaseOne.py" -input /twitterdata/resone -output /twitterdata/MR1result
+
+hadoop fs -rm /pig/MR1result/_SUCCESS
+
+hadoop fs -cat /pig/MR1result/* | hadoop fs -put - /pig/MR1out
+
+hadoop fs -copyToLocal /pig/MR1out /home/saumit_91/finalresult
+
+# putting comma to load in hive
+
+sed -e 's/\s/,/g' finalresult > finalresult1
+
+#Using Hive, generating the two required dataset for visualization
+
+create table final(word string, name string, count int)row format delimited fields terminated by ',';
+load data local inpath '/home/saumit_91/finalresult1' overwrite into table final;
+select count(*) from final;
+
+#Query for the Stacked bar graph, Count bar chart and donut chart
+INSERT OVERWRITE LOCAL DIRECTORY '/home/saumit_91/resone2' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select * from final where word in (select word from fi
+nal group by word having count(*) > 16) order by count desc limit 10;
+
+#Query for the word cloud
+INSERT OVERWRITE LOCAL DIRECTORY '/home/saumit_91/resone3' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select distinct(word), count from final where word in
+ (select word from final group by word having count(*) > 10) order by count desc limit 300 ;
+
+
+
+
